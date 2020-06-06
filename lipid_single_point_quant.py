@@ -8,6 +8,7 @@ import numpy as np
 import re
 import csv
 from pathlib import Path
+import pyinputplus
 
 FIRST_COLUMN = 1
 FIRST_ROW = 1
@@ -21,11 +22,16 @@ def set_standards_from_csv(df):
     Returns:
         dictionary of with all needed standards information filled in
     """
-    file_path = input(
-        "Enter full file path for csv file containing standards information: ")
-    standards_file = open(file_path)
-    reader = csv.reader(standards_file)
-    standards_data = list(reader)
+    while True:
+        try:
+            file_path = pyinputplus.inputFilepath(
+                "Enter full file path for csv file containing standards information: ")
+            standards_file = open(file_path)
+            reader = csv.reader(standards_file)
+            standards_data = list(reader)
+            break
+        except FileNotFoundError:
+            print(FileNotFoundError)
 
     # populate standards dictionary from file
     standards = {}
@@ -131,8 +137,14 @@ if __name__ == "__main__":
     while True:
 
         # get files and extraction amount from user
-        df_path = input("Enter full file path for data excel sheet: ")
-        df = pd.read_excel(df_path)
+        while True:
+            try:
+                df_path = pyinputplus.inputFilepath(
+                    "Enter full file path for data excel sheet: ", mustExist=True)
+                df = pd.read_excel(df_path)
+                break
+            except FileNotFoundError:
+                print(FileNotFoundError)
 
         # set named constants and sample names from data frame
         ISTD_MATCH_COLUMN = set_named_constant(df, r'number')
@@ -144,8 +156,8 @@ if __name__ == "__main__":
         standards = set_standards_from_csv(df)
 
         # get extraction amount from user for calculation
-        extraction_amount = float(
-            input("Enter how much sample was extracted (mL or mg): "))
+        extraction_amount = pyinputplus.inputFloat(
+            "Enter how much sample was extracted (mL or mg): ", greaterThan=0)
 
         # calculate results and save to new excel sheet
         calculate_results(df, sample_names, standards)
@@ -155,7 +167,7 @@ if __name__ == "__main__":
         df.to_excel(save_path, index=False)
 
         # allow user to repeat on another sheet, or exit program
-        again = input(
-            "Enter Y to repeat on another sheet or press enter to exit: ")
-        if again.lower() != "y":
+        again = pyinputplus.inputYesNo(
+            'Enter "yes" to repeat on another sheet or enter "no" to exit: ')
+        if again.lower() != "yes":
             break
