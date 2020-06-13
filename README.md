@@ -1,4 +1,4 @@
-# Lipidomics-iSTD-Single-Point-Quant
+# Pandas Automated Lipidomics Single Point Quantification
 
 ## Authors
 
