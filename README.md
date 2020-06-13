@@ -6,14 +6,7 @@
 
 ## Description: 
 
-Performs semi-quantitative single point quantification based on internal 
-standard heights for CSH Lipidomics assay.  Excel sheets and internal standards 
-CSV file must be in format listed below.  Results are in ng/mL or ng/mg based on sample extraction amount.
-
-## Sources
-
-* https://automatetheboringstuff.com/
-* http://prime.psc.riken.jp/Metabolomics_Software/MS-DIAL/
+Using Python and Pandas for data manipulation, calulates semi-quantitative single point quantification based on internal standard heights for CSH Lipidomics assay.  User enters Excel sheet containing untargeted Lipidomics raw data and internal standards CSV file containing internal standards information.  Program will return a results Excel file containing semi-quantified values in ng/mL or ng/mg based on sample extraction information.
 
 ## Standards CSV File Format:
 
@@ -64,3 +57,8 @@ CSV file must be in format listed below.  Results are in ng/mL or ng/mg based on
     * 1_5-PAHSA-d9; iSTD [M-H]-  
     * 1_PI (15:0-18:1)-d7; iSTD [M-H]-   
     * 1_PS (15:0-18:1)-d7; iSTD [M-H]-
+   
+   ## Sources
+
+* https://automatetheboringstuff.com/
+* http://prime.psc.riken.jp/Metabolomics_Software/MS-DIAL/
