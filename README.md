@@ -6,7 +6,7 @@
 
 ## Description: 
 
-Using Python and Pandas for data manipulation, calulates semi-quantitative single point quantification based on internal standard heights for CSH Lipidomics assay.  User enters Excel sheet containing untargeted Lipidomics raw data and internal standards CSV file containing internal standards information.  Program will return a results Excel file containing semi-quantified values in ng/mL or ng/mg based on sample extraction information.
+Using Python and Pandas for data manipulation, calculates semi-quantitative single point quantification based on internal standard heights for CSH Lipidomics assay.  User enters Excel sheet containing untargeted Lipidomics raw data and internal standards CSV file containing internal standards information.  Program will return a results Excel file containing semi-quantified values in ng/mL or ng/mg based on sample extraction information.
 
 ## Standards CSV File Format:
 
