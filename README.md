@@ -24,13 +24,13 @@ Using Python and Pandas for data manipulation, calculates semi-quantitative sing
 
 * Format generally follows raw ouput of MS-Dial with addition of iSTD Matching Number
 * Row 1 column headers must be in the following order:
-   * [Sample Information Headers] ... [Sample Headers]
-   * Within Sample Information Headers, you must include the two following column headers:
+   * [Sample Meta Information Columns] ... [Sample Columns]
+   * Within Sample Meta Information Columns, you must include the two following column headers:
    * iSTD Matching Number: must include "Number" in header string                
    * iSTD match number should match the iSTD with native annotations of the same compound class and matching adduct.  For example, if the number is 1 for 1_CE 22:1; iSTD  then all CE annotations must have 1.
    * Annotation Name: must include "Name" in header string
-   * You can include as many other meta information header as needed in the Sample Information Headers section.
-   * Which header goes into which column in the Sample Information Headers section does not matter.
+   * You can include as many other meta information header as needed in the Sample Meta Information Columns section.
+   * Which header goes into which column does not matter, as long as all meta information columns are to the left of the sample columns.
    * Recommended to only include the single highest abundance adduct for each compound class.  Native adduct must match exactly with adduct used for iSTD.
    * Do not compare combined adducts with uncombined adducts.  For example, never compare the [M+H]+ species with a combined [M+H]+ [M+Na]+ species.  Peak heights are being compared and combining adducts skew the peak height ratios of the iSTD and native species.
 * The sample names must be in the following format:
