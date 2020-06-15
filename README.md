@@ -16,7 +16,7 @@ Using Python and Pandas for data manipulation, calculates semi-quantitative sing
 ## Standards CSV File Format:
 
 * Header Column A: iSTD Name
-* Header Column B: ng extracted
+* Header Column B: ng iSTD extracted
 * Starting from row 2, input iSTD being used for single point quant
 * iSTD name must match exactly with iSTD name in excel file
 
