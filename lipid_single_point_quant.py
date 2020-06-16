@@ -117,7 +117,7 @@ def calculate_results(df, sample_name_list, standards):
         sample_name_list: list of all sample names in data frame
         standards: dictionary of standards in formath {name: {"ID":, "Row", "ng_extracted"}}
     Returns:
-        None - alters data frame in place, values now represent semi-quant values
+        df_store_calculations - new data frame with calculated results
     """
 
     # create a new data frame to store values in
