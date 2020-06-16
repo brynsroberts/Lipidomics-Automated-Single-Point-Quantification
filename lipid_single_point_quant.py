@@ -38,11 +38,11 @@ def set_standards_from_csv(df):
     for row in range(FIRST_ROW, len(standards_data)):
         name = standards_data[row][0]
         try:
-            concentration = float(standards_data[row][1])
+            ng_extracted = float(standards_data[row][1])
         except ValueError:
             print(ValueError)
         standards[name] = {
-            "Row": 0, "ID": 0, "Concentration": concentration}
+            "Row": 0, "ID": 0, "ng_extracted": ng_extracted}
 
     # populate Row and ID from data frame
     set_standard_row_id(df, standards)
@@ -125,12 +125,13 @@ def calculate_results(df, sample_name_list, standards):
             # get matching internal standards and native values needed for calculation
             standard = find_matching_istd(df, row, standards)
             standard_row = standards[standard]["Row"]
-            standard_concentration = standards[standard]["Concentration"]
+            standard_concentration = standards[standard]["ng_extracted"]
             native_height = df[sample][row]
             istd_height = df[sample][standard_row]
 
             # update data frame location with calculated value
-            df.loc[row, sample] = ((native_height / istd_height) * standard_concentration) / extraction_amount
+            df.loc[row, sample] = (
+                (native_height / istd_height) * standard_concentration) / extraction_amount
 
 
 if __name__ == "__main__":
