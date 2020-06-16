@@ -119,6 +119,10 @@ def calculate_results(df, sample_name_list, standards):
     Returns:
         None - alters data frame in place, values now represent semi-quant values
     """
+
+    # create a new data frame to store values in
+    df_store_calculations = df.copy()
+
     for sample in sample_name_list:
         for row in range(len(df)):
 
@@ -130,8 +134,11 @@ def calculate_results(df, sample_name_list, standards):
             istd_height = df[sample][standard_row]
 
             # update data frame location with calculated value
-            df.loc[row, sample] = (
-                (native_height / istd_height) * standard_concentration) / extraction_amount
+            calculated_concentration = (
+                ((native_height / istd_height) * standard_concentration) / extraction_amount)
+            df_store_calculations.loc[row, sample] = calculated_concentration
+
+    return df_store_calculations
 
 
 if __name__ == "__main__":
@@ -162,11 +169,11 @@ if __name__ == "__main__":
             "Enter how much sample was extracted (mL or mg): ", greaterThan=0)
 
         # calculate results and save to new excel sheet
-        calculate_results(df, sample_names, standards)
+        df_after_calculations = calculate_results(df, sample_names, standards)
         path_obj = Path(df_path)
         save_path = str(path_obj.parent/path_obj.stem) + \
             '_SinglePointQuant.xlsx'
-        df.to_excel(save_path, index=False)
+        df_after_calculations.to_excel(save_path, index=False)
 
         # allow user to repeat on another sheet, or exit program
         again = pyinputplus.inputYesNo(
