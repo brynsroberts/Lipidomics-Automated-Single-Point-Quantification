@@ -85,7 +85,7 @@ def set_standard_row_id(df, standards):
     """sets row and id in standards dictionary from data frame
     Parameters:
         df (data frame): user excel sheet in pandas data frame
-        standards: dictionary of standards in formath {name: {"ID":, "Row", "Concentration"}}
+        standards: dictionary of standards in formath {name: {"ID":, "Row", "ng_extracted"}}
     Returns:
         None - changes standards in place
     """
@@ -101,7 +101,7 @@ def find_matching_istd(df, row, standards):
     Parameters:
         df (data frame): user excel sheet in pandas data frame
         row: int, row currently being processed in data frame
-        standards: dictionary of standards in formath {name: {"ID":, "Row", "Concentration"}}
+        standards: dictionary of standards in formath {name: {"ID":, "Row", "ng_extracted"}}
     Returns:
         standard_name: string of matching standard based on ID of current row
     """
@@ -115,7 +115,7 @@ def calculate_results(df, sample_name_list, standards):
     Parameters:
         df (data frame): user excel sheet in pandas data frame
         sample_name_list: list of all sample names in data frame
-        standards: dictionary of standards in formath {name: {"ID":, "Row", "Concentration"}}
+        standards: dictionary of standards in formath {name: {"ID":, "Row", "ng_extracted"}}
     Returns:
         None - alters data frame in place, values now represent semi-quant values
     """
