@@ -37,7 +37,10 @@ def set_standards_from_csv(df):
     standards = {}
     for row in range(FIRST_ROW, len(standards_data)):
         name = standards_data[row][0]
-        concentration = standards_data[row][1]
+        try:
+            concentration = float(standards_data[row][1])
+        except ValueError:
+            print(ValueError)
         standards[name] = {
             "Row": 0, "ID": 0, "Concentration": concentration}
 
@@ -59,7 +62,6 @@ def set_named_constant(df, pattern):
         found = regex_pattern.search(column_name.lower())
         if found != None:
             return column_name
-    return None
 
 
 def set_sample_name_list(df, pattern):
@@ -128,8 +130,7 @@ def calculate_results(df, sample_name_list, standards):
             istd_height = df[sample][standard_row]
 
             # update data frame location with calculated value
-            df.loc[row, sample] = ((native_height / istd_height) *
-                                   float(standard_concentration)) / extraction_amount
+            df.loc[row, sample] = ((native_height / istd_height) * standard_concentration) / extraction_amount
 
 
 if __name__ == "__main__":
