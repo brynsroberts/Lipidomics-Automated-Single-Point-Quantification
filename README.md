@@ -10,7 +10,7 @@ Using Python and Pandas for data manipulation, calculates semi-quantitative sing
 
 ## Calculation
 
-* single point quant in ng/mL or ng/mg - ((native height / matching iSTD height) * ng iSTD extracted) / amount sample extracted (ng or mg)
+* single point quant in ng/mL or ng/mg - ((native peak height / matching iSTD peak height) * ng iSTD extracted) / amount sample extracted (mL or mg)
 * ng iSTD extracted = ng/mL in QC Mix * mL added during extraction
 
 ## Standards CSV File Format:
