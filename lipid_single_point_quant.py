@@ -134,9 +134,16 @@ def calculate_results(df, sample_name_list, standards):
             istd_height = df[sample][standard_row]
 
             # update data frame location with calculated value
-            calculated_concentration = (
-                ((native_height / istd_height) * standard_concentration) / extraction_amount)
-            df_store_calculations.loc[row, sample] = calculated_concentration
+            if 'biorec' in sample.lower():
+                calculated_concentration = (
+                    ((native_height / istd_height) * standard_concentration) / qc_extraction_amount)
+                df_store_calculations.loc[row,
+                                          sample] = calculated_concentration
+            else:
+                calculated_concentration = (
+                    ((native_height / istd_height) * standard_concentration) / sample_extraction_amount)
+                df_store_calculations.loc[row,
+                                          sample] = calculated_concentration
 
     return df_store_calculations
 
@@ -164,9 +171,11 @@ if __name__ == "__main__":
         # get standards csv file from user and populate standards dictionary
         standards = set_standards_from_csv(df)
 
-        # get extraction amount from user for calculation
-        extraction_amount = pyinputplus.inputFloat(
+        # get sample and qc extraction amount from user for calculation
+        sample_extraction_amount = pyinputplus.inputFloat(
             "Enter how much sample was extracted (mL or mg): ", greaterThan=0)
+        qc_extraction_amount = pyinputplus.inputFloat(
+            "Enter how much biorec/nist was extracted (mL or mg): ", greaterThan=0)
 
         # calculate results and save to new excel sheet
         df_after_calculations = calculate_results(df, sample_names, standards)
