@@ -1,5 +1,5 @@
 
-"""lipid_single_point_quant.py: calculates concentrations for species based on internal stanadard heights"""
+"""lipid_single_point_quant.py: calculates concentrations for species based on internal standard heights"""
 
 __author__ = "Bryan Roberts"
 
