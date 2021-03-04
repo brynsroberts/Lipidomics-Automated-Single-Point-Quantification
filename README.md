@@ -38,30 +38,7 @@ Using Python and Pandas for data manipulation, calculates semi-quantitative sing
    * Ex. "Biorec001_MX123456_posCSH_p1-001"
    * Sample ordering does not matter
 * First compound must start in row 2
-* List of recommended adduct species to use
-* Positive CSH: 
-    * 1_CE 22:1; iSTD [M+Na]+    
-    * 1_Cer d18:1/17:0; iSTD [M+H]+   
-    * 1_Cholesterol d7 iSTD [M+H-H2O]+   
-    * 1_DG 12:0/12:0/0:0; iSTD [M+Na]+   
-    * 1_LPC 17:0; iSTD [M+H]+   
-    * 1_LPE 17:1; iSTD [M+H]+   
-    * 1_PC 12:0/13:0; iSTD [M+H]+   
-    * 1_PE 17:0/17:0; iSTD [M+H]+   
-    * 1_SM d18:1/17:0; iSTD [M+H]+   
-    * 1_TG d5 17:0/17:1/17:0; iSTD [M+NH4]+
-* Negative CSH:   
-    * 1_FA 16:0-d3; iSTD [M-H]-   
-    * 1_Ceramide d18:1/17:0; iSTD [M+Cl]-   
-    * 1_PG 17:0/17:0; iSTD [M-H]-   
-    * 1_LPC 17:0; iSTD [M+HAc-H]-   
-    * 1_LPE 17:1; iSTD [M-H]-   
-    * 1_PC 12:0/13:0; iSTD [M+HAc-H]-   
-    * 1_PE 17:0/17:0; iSTD [M-H]-    
-    * 1_SM d18:1/17:0; iSTD [M+HAc-H]-  
-    * 1_5-PAHSA-d9; iSTD [M-H]-  
-    * 1_PI (15:0-18:1)-d7; iSTD [M-H]-   
-    * 1_PS (15:0-18:1)-d7; iSTD [M-H]-
+
    
    ## Sources
 
