@@ -115,6 +115,7 @@ def calculate_results(df, sample_name_list, standards, sample_amount):
         df (data frame): user excel sheet in pandas data frame
         sample_name_list: list of all sample names in data frame
         standards: dictionary of standards in formath {name: {"ID":, "Row", "ng_extracted"}}
+        sample_amount: dictionary of sample names as key and sample amount as value
     Returns:
         df_store_calculations - new data frame with calculated results
     """
@@ -140,7 +141,7 @@ def calculate_results(df, sample_name_list, standards, sample_amount):
     return df_store_calculations
 
 
-def set_sample_weights(sample_names):
+def set_sample_amount(sample_names):
     """returns dictionary with user input sample weights
     Parameters:
         sample_names: list with all sample names in data frame
@@ -154,10 +155,13 @@ def set_sample_weights(sample_names):
     individual_values = pyinputplus.inputYesNo(
         'Enter "yes" to input individual amount per sample or enter "no" to enter a single amount for all samples: ')
 
+    # get input for sample amount
     if individual_values.lower() == 'no':
         amount = pyinputplus.inputFloat("Enter how much sample was extracted (mL or mg): ", greaterThan=0)
     else:
         print("Enter how much sample was extracted (mL or mg):")
+
+    # for each sample - get amount
     for sample in sample_names:
         if individual_values.lower() == 'no':
             sample_amount[sample] = amount
@@ -192,7 +196,7 @@ if __name__ == "__main__":
         standards = set_standards_from_csv(df)
 
         # enter custom weights for each sample or user single value
-        sample_amount = set_sample_weights(sample_names)
+        sample_amount = set_sample_amount(sample_names)
 
         # calculate results and save to new excel sheet
         df_after_calculations = calculate_results(df, sample_names, standards, sample_amount)
