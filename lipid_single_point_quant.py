@@ -1,4 +1,3 @@
-
 """lipid_single_point_quant.py: calculates concentrations for species based on internal standard heights"""
 
 __author__ = "Bryan Roberts"
@@ -110,7 +109,7 @@ def find_matching_istd(df, row, standards):
             return standard_name
 
 
-def calculate_results(df, sample_name_list, standards):
+def calculate_results(df, sample_name_list, standards, sample_amount):
     """calculates single point quant results for entire data frame
     Parameters:
         df (data frame): user excel sheet in pandas data frame
@@ -125,7 +124,6 @@ def calculate_results(df, sample_name_list, standards):
 
     for sample in sample_name_list:
         for row in range(len(df)):
-
             # get matching internal standards and native values needed for calculation
             standard = find_matching_istd(df, row, standards)
             standard_row = standards[standard]["Row"]
@@ -134,18 +132,40 @@ def calculate_results(df, sample_name_list, standards):
             istd_height = df[sample][standard_row]
 
             # update data frame location with calculated value
-            if 'biorec' in sample.lower():
-                calculated_concentration = (
-                    ((native_height / istd_height) * standard_concentration) / qc_extraction_amount)
-                df_store_calculations.loc[row,
-                                          sample] = calculated_concentration
-            else:
-                calculated_concentration = (
-                    ((native_height / istd_height) * standard_concentration) / sample_extraction_amount)
-                df_store_calculations.loc[row,
-                                          sample] = calculated_concentration
+            calculated_concentration = (
+                    ((native_height / istd_height) * standard_concentration) / sample_amount[sample])
+            df_store_calculations.loc[row,
+                                      sample] = calculated_concentration
 
     return df_store_calculations
+
+
+def set_sample_weights(sample_names):
+    """returns dictionary with user input sample weights
+    Parameters:
+        sample_names: list with all sample names in data frame
+    Returns:
+        dictionary with key as sample name and value as user input sample amount
+    """
+    # dictionary to store amount for each sample
+    sample_amount = dict()
+
+    # ask user to get individual sample amounts or the same value for each sample
+    individual_values = pyinputplus.inputYesNo(
+        'Enter "yes" to input individual amount per sample or enter "no" to enter a single amount for all samples: ')
+
+    if individual_values.lower() == 'no':
+        amount = pyinputplus.inputFloat("Enter how much sample was extracted (mL or mg): ", greaterThan=0)
+    else:
+        print("Enter how much sample was extracted (mL or mg):")
+    for sample in sample_names:
+        if individual_values.lower() == 'no':
+            sample_amount[sample] = amount
+        else:
+            amount = pyinputplus.inputFloat(f'{sample}: ', greaterThan=0)
+            sample_amount[sample] = amount
+
+    return sample_amount
 
 
 if __name__ == "__main__":
@@ -171,17 +191,14 @@ if __name__ == "__main__":
         # get standards csv file from user and populate standards dictionary
         standards = set_standards_from_csv(df)
 
-        # get sample and qc extraction amount from user for calculation
-        sample_extraction_amount = pyinputplus.inputFloat(
-            "Enter how much sample was extracted (mL or mg): ", greaterThan=0)
-        qc_extraction_amount = pyinputplus.inputFloat(
-            "Enter how much biorec/nist was extracted (mL or mg): ", greaterThan=0)
+        # enter custom weights for each sample or user single value
+        sample_amount = set_sample_weights(sample_names)
 
         # calculate results and save to new excel sheet
-        df_after_calculations = calculate_results(df, sample_names, standards)
+        df_after_calculations = calculate_results(df, sample_names, standards, sample_amount)
         path_obj = Path(df_path)
-        save_path = str(path_obj.parent/path_obj.stem) + \
-            '_SinglePointQuant.xlsx'
+        save_path = str(path_obj.parent / path_obj.stem) + \
+                    '_SinglePointQuant.xlsx'
         df_after_calculations.to_excel(save_path, index=False)
 
         # allow user to repeat on another sheet, or exit program
